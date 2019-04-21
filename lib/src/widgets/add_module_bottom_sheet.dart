@@ -9,7 +9,6 @@ class AddModule extends StatelessWidget {
     final Size deviceSize = MediaQuery.of(context).size;
 
     return Stack(
-      //overflow: Overflow.visible,
       alignment: Alignment.topCenter,
       children: <Widget>[
         // Most back container for design
