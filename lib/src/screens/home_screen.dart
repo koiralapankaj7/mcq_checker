@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mcq_checker/src/widgets/add_module_bottom_sheet.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('MCQ - Checker'),
       ),
@@ -32,7 +41,8 @@ class HomeScreen extends StatelessWidget {
               color: Colors.blue,
             ),
             onTap: () {
-              print('Clicked');
+              _scaffoldKey.currentState
+                  .showBottomSheet((BuildContext context) => AddModule());
             },
           ),
         ),
