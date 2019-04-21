@@ -1,52 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddModule extends StatelessWidget {
   //
   //
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20.0),
-      height: MediaQuery.of(context).size.height * 0.5,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.0),
-          topRight: Radius.circular(16.0),
-        ),
-        color: Color(0xff232f34),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          textField('Module', 'Programming'),
-          SizedBox(height: 16.0),
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                child: textField('Year', '1st'),
-                width: 100.0,
-              ),
-              // SizedBox(width: 16.0),
-              Container(
-                child: textField('Sem', '1st'),
-                width: 100.0,
-              ),
-              // SizedBox(width: 16.0),
-              Container(
-                child: textField('Group', 'L1C2'),
-                width: 150.0,
-              ),
-            ],
-          ),
-          SizedBox(height: 16.0),
-          textField('Marker', 'Pankaj Koirala'),
-          SizedBox(height: 16.0),
-          btnAttachAnswer(),
-          btnAdd(),
-        ],
-      ),
+    final Size deviceSize = MediaQuery.of(context).size;
+
+    return Stack(
+      //overflow: Overflow.visible,
+      alignment: Alignment.topCenter,
+      children: <Widget>[
+        // Most back container for design
+        stackBackground(deviceSize),
+        // Main Widget which is in middle
+        mainWidget(deviceSize),
+        // Top widget which is used to show + within circle.
+        circleWithPlus(),
+      ],
     );
   }
 
@@ -93,6 +65,103 @@ class AddModule extends StatelessWidget {
             Radius.circular(16.0),
           ),
           borderSide: BorderSide(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget stackBackground(Size deviceSize) {
+    return Container(
+      height: (deviceSize.height * 0.6) + 50.0,
+      decoration: BoxDecoration(
+        color: Color(0xff232f34),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
+        ),
+      ),
+    );
+  }
+
+  Widget mainWidget(Size deviceSize) {
+    return Positioned(
+      bottom: 0.0,
+      left: 0.0,
+      right: 0.0,
+      child: Container(
+        padding: EdgeInsets.all(20.0),
+        height: deviceSize.height * 0.6,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16.0),
+            topRight: Radius.circular(16.0),
+          ),
+          color: Color(0xff344955),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            SizedBox(height: 25.0),
+            Text(
+              'Add module'.toUpperCase(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22.0,
+                letterSpacing: 2.0,
+                wordSpacing: 3.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 30.0),
+            textField('Module', 'Programming'),
+            SizedBox(height: 16.0),
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  child: textField('Year', '1st'),
+                  width: 100.0,
+                ),
+                // SizedBox(width: 16.0),
+                Container(
+                  child: textField('Sem', '1st'),
+                  width: 100.0,
+                ),
+                // SizedBox(width: 16.0),
+                Container(
+                  child: textField('Group', 'L1C2'),
+                  width: 150.0,
+                ),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            textField('Marker', 'Pankaj Koirala'),
+            SizedBox(height: 30.0),
+            btnAttachAnswer(),
+            btnAdd(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget circleWithPlus() {
+    return Container(
+      height: 80.0,
+      width: 80.0,
+      decoration: BoxDecoration(
+        color: Color(0xff232f34),
+        borderRadius: BorderRadius.circular(40.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CircleAvatar(
+          backgroundColor: Color(0xff344955),
+          child: Icon(
+            CupertinoIcons.add,
+            size: 40.0,
             color: Colors.white,
           ),
         ),
