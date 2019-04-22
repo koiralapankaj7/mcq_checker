@@ -4,6 +4,7 @@ import 'package:mcq_checker/src/blocs/module_bloc.dart';
 import 'package:mcq_checker/src/models/module.dart';
 import 'package:mcq_checker/src/resources/db_provider.dart';
 import 'package:mcq_checker/src/widgets/add_module_bottom_sheet.dart';
+import 'package:mcq_checker/src/widgets/module_list_tile.dart';
 
 class HomeScreen extends StatelessWidget {
   final ModuleBloc bloc;
@@ -21,7 +22,8 @@ class HomeScreen extends StatelessWidget {
         title: Text('MCQ - Checker'),
         backgroundColor: Color(0xff232f34),
       ),
-      body: createInitialBody(),
+      floatingActionButton: addModule(true),
+      body: buildBody(),
     );
   }
 
@@ -34,63 +36,13 @@ class HomeScreen extends StatelessWidget {
         }
 
         return ListView.builder(
+          padding: EdgeInsets.all(8.0),
           itemCount: snapshot.data.length,
           itemBuilder: (BuildContext context, int index) {
-            return Text(snapshot.data[index].module);
+            return ModuleListTile(module: snapshot.data[index]);
           },
         );
       },
-    );
-  }
-
-  Widget createMainBody() {
-    return SingleChildScrollView(
-      child: Container(
-        //color: Colors.grey,
-        margin: EdgeInsets.all(16.0),
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          spacing: 16.0,
-          runSpacing: 16.0,
-          children: <Widget>[
-            buildChip('Programming'),
-            buildChip('Database'),
-            buildChip('IS'),
-            buildChip('AD'),
-            buildChip('Programming'),
-            buildChip('Database'),
-            buildChip('IS'),
-            buildChip('AD'),
-            buildChip('Programming'),
-            buildChip('Database'),
-            buildChip('IS'),
-            buildChip('AD'),
-            buildChip('Programming'),
-            buildChip('Database'),
-            buildChip('IS'),
-            buildChip('AD'),
-            buildChip('Programming'),
-            buildChip('Database'),
-            buildChip('IS'),
-            buildChip('AD'),
-            buildChip('Programming'),
-            buildChip('Database'),
-            buildChip('IS'),
-            buildChip('AD'),
-            buildChip('Programming'),
-            buildChip('Database'),
-            buildChip('IS'),
-            buildChip('AD'),
-            buildChip('IS'),
-            buildChip('AD'),
-            buildChip('Programming'),
-            buildChip('Database'),
-            buildChip('IS'),
-            // buildChip('AD'),
-            addModule(true),
-          ],
-        ),
-      ),
     );
   }
 
@@ -121,20 +73,20 @@ class HomeScreen extends StatelessWidget {
 
   Widget addModule(bool isSmall) {
     return Container(
-      height: isSmall ? 50.0 : 250.0,
-      width: isSmall ? 50.0 : 250.0,
+      height: isSmall ? 80.0 : 250.0,
+      width: isSmall ? 80.0 : 250.0,
       decoration: BoxDecoration(
-        color: Color(0xCC232f34),
-        borderRadius: BorderRadius.circular(isSmall ? 25.0 : 125.0),
+        color: isSmall ? Colors.green[400] : Color(0xCC232f34),
+        borderRadius: BorderRadius.circular(isSmall ? 40.0 : 125.0),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(isSmall ? 25.0 : 125.0),
+          borderRadius: BorderRadius.circular(isSmall ? 40.0 : 125.0),
           splashColor: Color(0xff344955),
           child: Icon(
             CupertinoIcons.add,
-            size: isSmall ? 30.0 : 100.0,
+            size: isSmall ? 50.0 : 100.0,
             color: isSmall ? Colors.white70 : Colors.white30,
           ),
           onTap: () {
@@ -147,6 +99,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   void callThis() async {
-    bloc.addModule(Module('module', 1, 1, 'group', 'marker', [], []));
+    bloc.addModule(Module('', 1, 1, 'group', 'marker', [], []));
   }
 }

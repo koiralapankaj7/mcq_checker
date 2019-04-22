@@ -85,6 +85,8 @@ class DatabaseProvider {
 
   // Fetch All Module
   Future<List<Module>> fetchAllModule() async {
+    print("Fetch all module called from db provider");
+
     Database db = await this.database;
     final List<Map<String, dynamic>> maps = await db.query(
       _modulesTable,
@@ -96,7 +98,7 @@ class DatabaseProvider {
       maps.forEach((Map<String, dynamic> row) {
         moduleList.add(Module.fromDb(row));
       });
-      print(moduleList.length);
+
       return moduleList;
     }
     return null;
