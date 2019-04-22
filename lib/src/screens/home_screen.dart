@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mcq_checker/src/models/module.dart';
+import 'package:mcq_checker/src/resources/db_provider.dart';
 import 'package:mcq_checker/src/widgets/add_module_bottom_sheet.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
@@ -19,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('MCQ - Checker'),
         backgroundColor: Color(0xff232f34),
       ),
-      body: createMainBody(),
+      body: createInitialBody(),
     );
   }
 
