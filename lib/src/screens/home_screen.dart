@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mcq_checker/src/blocs/module_bloc.dart';
 import 'package:mcq_checker/src/models/module.dart';
 import 'package:mcq_checker/src/resources/db_provider.dart';
 import 'package:mcq_checker/src/widgets/add_module_bottom_sheet.dart';
 
 class HomeScreen extends StatelessWidget {
+  final ModuleBloc bloc;
+
+  HomeScreen({this.bloc});
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
@@ -16,7 +21,25 @@ class HomeScreen extends StatelessWidget {
         title: Text('MCQ - Checker'),
         backgroundColor: Color(0xff232f34),
       ),
-      body: createInitialBody(),
+      body: buildBody(),
+    );
+  }
+
+  Widget buildBody() {
+    return StreamBuilder(
+      stream: bloc.modules,
+      builder: (BuildContext context, AsyncSnapshot<List<Module>> snapshot) {
+        if (!snapshot.hasData) {
+          return createInitialBody();
+        }
+
+        return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Text(snapshot.data[index].module);
+          },
+        );
+      },
     );
   }
 
@@ -115,11 +138,19 @@ class HomeScreen extends StatelessWidget {
             color: isSmall ? Colors.white70 : Colors.white30,
           ),
           onTap: () {
-            _scaffoldKey.currentState
-                .showBottomSheet((BuildContext context) => AddModule());
+            //
+
+            callThis();
+
+            // _scaffoldKey.currentState
+            //     .showBottomSheet((BuildContext context) => AddModule());
           },
         ),
       ),
     );
+  }
+
+  void callThis() async {
+    bloc.addModule(Module('module', 1, 1, 'group', 'marker', [], []));
   }
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class Module {
   // Primary key
-  final int id;
+  int id;
   // Module name
   final String module;
   // Student year
@@ -14,9 +14,9 @@ class Module {
   // Marker name
   final String marker;
   // List of students id
-  final List<int> kids;
+  final List<dynamic> kids;
   // Map of correct answers. <questionNo, Answer>
-  final List<int> answer;
+  final List<dynamic> answer;
 
   static final String _columnId = 'id';
   static final String _columnModule = 'module';
@@ -27,27 +27,15 @@ class Module {
   static final String _columnKids = 'kids';
   static final String _columnAnswer = 'answer';
 
-  Module(int id, String module, int year, int sem, String group, String marker,
+  Module(String module, int year, int sem, String group, String marker,
       List<int> kids, List<int> answers)
-      : this.id = id,
-        this.module = module,
+      : this.module = module,
         this.year = year,
         this.sem = sem,
         this.group = group,
         this.marker = marker,
         this.kids = kids,
         this.answer = answers;
-
-  Map<String, dynamic> moduleRecord = {
-    "id": 1,
-    "module": "Programming",
-    "year": 2019,
-    "sem": 2,
-    "sGroup": "L1C2",
-    "marker": "Pankaj Koirala",
-    "kids": [1, 2, 3, 4, 5],
-    "answer": [1, 2, 3, 4, 5]
-  };
 
   // to get data from database
   Module.fromDb(Map<String, dynamic> parsedJson)
@@ -62,7 +50,6 @@ class Module {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      _columnId: id,
       _columnModule: module,
       _columnYear: year,
       _columnSem: sem,

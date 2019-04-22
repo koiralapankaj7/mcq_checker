@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screens/home_screen.dart';
 import '../screens/result_screen.dart';
+import '../blocs/module_provider.dart';
 
 class AppRoutes {
   Route routes(RouteSettings settings) {
@@ -8,7 +9,9 @@ class AppRoutes {
     if (settings.name == '/') {
       return MaterialPageRoute(
         builder: (BuildContext context) {
-          return HomeScreen();
+          final ModuleBloc bloc = ModuleProvider.of(context);
+          bloc.fetchAllModule();
+          return HomeScreen(bloc: bloc);
         },
       );
     }
