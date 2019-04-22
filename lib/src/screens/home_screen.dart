@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         title: Text('MCQ - Checker'),
         backgroundColor: Color(0xff232f34),
       ),
-      body: buildBody(),
+      body: createInitialBody(),
     );
   }
 
@@ -138,12 +138,8 @@ class HomeScreen extends StatelessWidget {
             color: isSmall ? Colors.white70 : Colors.white30,
           ),
           onTap: () {
-            //
-
-            callThis();
-
-            // _scaffoldKey.currentState
-            //     .showBottomSheet((BuildContext context) => AddModule());
+            _scaffoldKey.currentState
+                .showBottomSheet((BuildContext context) => AddModule());
           },
         ),
       ),
