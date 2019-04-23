@@ -22,8 +22,7 @@ class HomeScreen extends StatelessWidget {
         title: Text('MCQ - Checker'),
         backgroundColor: Color(0xff232f34),
       ),
-      floatingActionButton: addModule(true),
-      body: buildBody(),
+      body: createInitialBody(),
     );
   }
 
