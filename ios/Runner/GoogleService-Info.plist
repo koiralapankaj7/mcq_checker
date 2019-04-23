@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>37152974497-vnbj9rppdhhehlg8of5oglrmdsu06ich.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.37152974497-vnbj9rppdhhehlg8of5oglrmdsu06ich</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>37152974497-g9b4504gs4m0ibio3ft294qb83a3f5kf.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBiYEPGQ6rxnpxm9tGN9GbfBqaHFD7DKrs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>37152974497</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mcqchecker.mcqchecker</string>
+	<key>PROJECT_ID</key>
+	<string>mcq-checker</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mcq-checker.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:37152974497:ios:34f59e2e70e7adfa</string>
+	<key>DATABASE_URL</key>
+	<string>https://mcq-checker.firebaseio.com</string>
+</dict>
+</plist>

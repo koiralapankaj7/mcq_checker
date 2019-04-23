@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "37152974497",
+    "firebase_url": "https://mcq-checker.firebaseio.com",
+    "project_id": "mcq-checker",
+    "storage_bucket": "mcq-checker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37152974497:android:34f59e2e70e7adfa",
+        "android_client_info": {
+          "package_name": "com.mcqchecker.mcqchecker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "37152974497-g9b4504gs4m0ibio3ft294qb83a3f5kf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mcqchecker.mcqchecker",
+            "certificate_hash": "45b00acc021cbac57fd0bf9dd290b0e30d425849"
+          }
+        },
+        {
+          "client_id": "37152974497-flf94uvl342jgvteos05t10t662v3f86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIAzd6cmD65446uGIHQmEXUp2HAnzGesQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "37152974497-flf94uvl342jgvteos05t10t662v3f86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
