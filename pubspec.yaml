@@ -29,6 +29,7 @@ dependencies:
   rxdart: ^0.21.0
   firebase_ml_vision: 
   image_picker: ^0.5.4
+  firebase_core: ^0.3.0
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 class AddModule extends StatelessWidget {
+  final BuildContext context;
+  final GlobalKey<ScaffoldState> scaffold;
+  AddModule({this.scaffold, this.context});
+
   //
   //
   @override
@@ -171,7 +180,12 @@ class AddModule extends StatelessWidget {
   Widget btnAttachAnswer() {
     return InkWell(
       onTap: () {
-        print('Clicked scann answer btn');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return buildDialog();
+          },
+        );
       },
       child: Container(
         height: 60.0,
@@ -193,10 +207,117 @@ class AddModule extends StatelessWidget {
     );
   }
 
+  Widget buildDialog() {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        height: 200.0,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 60.0,
+              width: double.maxFinite,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                ),
+              ),
+              child: Text(
+                'Scan answer using',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w100,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          minRadius: 30.0,
+                          child: IconButton(
+                            padding: EdgeInsets.only(bottom: 4.0),
+                            icon: Icon(
+                              CupertinoIcons.photo_camera,
+                              size: 40.0,
+                            ),
+                            onPressed: () {
+                              print('Camera');
+                              pickImage();
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Camera",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          minRadius: 30.0,
+                          child: IconButton(
+                            padding: EdgeInsets.only(bottom: 4.0),
+                            icon: Icon(
+                              CupertinoIcons.folder,
+                              size: 35.0,
+                            ),
+                            onPressed: () {
+                              print('Gallery');
+                              pickImage();
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Gallery",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget btnAdd() {
     return InkWell(
       onTap: () {
         print('Add Module');
+        processImage();
       },
       child: Container(
         height: 60.0,
@@ -216,5 +337,50 @@ class AddModule extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  File pickedImage;
+
+  Future pickImage() async {
+    try {
+      final File file =
+          await ImagePicker.pickImage(source: ImageSource.gallery);
+      Navigator.pop(context);
+
+      if (file == null) {
+        throw Exception("File is not available");
+      }
+
+      pickedImage = file;
+
+      processImage();
+    } catch (e) {
+      scaffold.currentState.showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+  }
+
+  Future processImage() async {
+    print("Processing image....");
+    FirebaseVisionImage image = FirebaseVisionImage.fromFile(pickedImage);
+    print('File name is ${pickedImage}');
+    TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
+    print('Text recognizer is $textRecognizer');
+    VisionText text = await textRecognizer.processImage(image);
+    print('Text text is ${text.blocks}');
+
+    for (TextBlock block in text.blocks) {
+      print('Block is $block');
+      for (TextLine textLine in block.lines) {
+        print('Textline is $textLine');
+        for (TextElement word in textLine.elements) {
+          print('Text is ${word.text}');
+          print('Working or not?');
+        }
+      }
+    }
   }
 }

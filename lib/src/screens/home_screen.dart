@@ -6,12 +6,44 @@ import 'package:mcq_checker/src/resources/db_provider.dart';
 import 'package:mcq_checker/src/widgets/add_module_bottom_sheet.dart';
 import 'package:mcq_checker/src/widgets/module_list_tile.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final ModuleBloc bloc;
 
   HomeScreen({this.bloc});
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  VoidCallback _bottomSheetCallback;
+  PersistentBottomSheetController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _bottomSheetCallback = _showBottomSheet;
+  }
+
+  void _showBottomSheet() {
+    setState(() {
+      _bottomSheetCallback = null;
+    });
+
+    _controller =
+        _scaffoldKey.currentState.showBottomSheet((BuildContext context) {
+      return AddModule(scaffold: _scaffoldKey, context: context);
+    });
+
+    _controller.closed.whenComplete(() {
+      if (mounted) {
+        setState(() {
+          _bottomSheetCallback = _showBottomSheet;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +54,19 @@ class HomeScreen extends StatelessWidget {
         title: Text('MCQ - Checker'),
         backgroundColor: Color(0xff232f34),
       ),
-      body: createInitialBody(),
+      body: addModule(false),
     );
   }
 
   Widget buildBody() {
     return StreamBuilder(
-      stream: bloc.modules,
+      stream: widget.bloc.modules,
       builder: (BuildContext context, AsyncSnapshot<List<Module>> snapshot) {
         if (!snapshot.hasData) {
-          return createInitialBody();
+          return Center(
+            child: addModule(false),
+          );
         }
-
         return ListView.builder(
           padding: EdgeInsets.all(8.0),
           itemCount: snapshot.data.length,
@@ -42,31 +75,6 @@ class HomeScreen extends StatelessWidget {
           },
         );
       },
-    );
-  }
-
-  Widget buildChip(String label) {
-    return Chip(
-      label: Text(
-        label,
-        style: TextStyle(color: Colors.white),
-      ),
-      elevation: 10.0,
-      labelPadding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
-      backgroundColor: Color(0xff000000),
-      labelStyle: TextStyle(fontSize: 16.0),
-      deleteIconColor: Color(0xff344955),
-      deleteIcon: Icon(
-        Icons.cancel,
-        color: Colors.white70,
-      ),
-      onDeleted: () {},
-    );
-  }
-
-  Widget createInitialBody() {
-    return Center(
-      child: addModule(false),
     );
   }
 
@@ -88,16 +96,17 @@ class HomeScreen extends StatelessWidget {
             size: isSmall ? 50.0 : 100.0,
             color: isSmall ? Colors.white70 : Colors.white30,
           ),
-          onTap: () {
-            _scaffoldKey.currentState
-                .showBottomSheet((BuildContext context) => AddModule());
-          },
+          onTap: _bottomSheetCallback,
+          // () {
+          //   _scaffoldKey.currentState.showBottomSheet(
+          //     (BuildContext context) => AddModule(
+          //           scaffold: _scaffoldKey,
+          //           context: context,
+          //         ),
+          //   );
+          // },
         ),
       ),
     );
-  }
-
-  void callThis() async {
-    bloc.addModule(Module('', 1, 1, 'group', 'marker', [], []));
   }
 }
